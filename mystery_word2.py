@@ -65,27 +65,25 @@ def play_again():
     """Asks user if they'd like to play again, tried some error handling with else statement"""
     play_again = input("Would you like to play again (y/n): ")
     if play_again.casefold() == "y":
-        game_time(mystery_word)
+        game_time()
     elif play_again.casefold() == "n":
         print("Thanks for playing!")
     else:
         print("Please select y or n as your answer. ")
         play_again()
 
-mystery_word = set_user_word()
-
-
-def game_time(mystery_word):
+def game_time():
     """GAME TIME, this function takes our mystery_word and compiles the guesses 
     and cross checks to see if correct or not, displays progress and keeps counts 
     of attempts. Should try and break up a bit."""
 
     guessed = []
     attempts = 8
+    mystery_word = set_user_word()
+    
+    print(mystery_word)
 
-    set_user_word()
-
-    while attempts > 0: 
+    while attempts > 0:
 
         """uh-oh! this keeps running even if the player guesses the word (makes 
         sense since it's only accounting for attempts need to incorporate check 
@@ -94,11 +92,14 @@ def game_time(mystery_word):
         display = [letter if letter in guessed else "_" for letter in mystery_word]
 
         print("Guess the word:", (" ".join(display)))
-        
+
+        if "_" not in display: #breaks the while loop once user guesses the word
+            break
+
         print(attempts, "chances left")
-        
+
         guess = guess_check() #should this funtion take guess as the argument? It's not defined outside the function
-        
+
         if guess in guessed:
             print("Already guessed", guess)
         elif guess in mystery_word:
@@ -109,14 +110,14 @@ def game_time(mystery_word):
             attempts -= 1
             guessed.append(guess)
 
-    for letters in mystery_word: # Need to FIX don't need this for loop to print out repsonse for every letter -_-
-        if letters in guessed:
-            print("You guessed", mystery_word)
-        else:
-            print("You didn't get", mystery_word)
+    if attempts > 0: 
+        print("You guessed", mystery_word)
+    else:
+        print("You didn't get", mystery_word)
 
     play_again()
 
-    
-print(mystery_word) #prints mystery_word to check and run thru game 
-game_time(mystery_word)
+game_time()
+
+
+
