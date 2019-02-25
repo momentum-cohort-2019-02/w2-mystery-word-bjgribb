@@ -2,26 +2,17 @@ import re
 import random
 
     #opens file and reads data, setting as readFile to iterate thru below for cleaning
-readFile = open("words.txt", 'r')
+readFile = open("words.txt")
 
-    #lower cases and inputs to word_list
-word_list = []
-
-for words in readFile:
-    word_list.append(words.casefold())
-
-    #strips whitespace and inputs to final_word_list
+    #lower cases and inputs to final_word_list
 final_word_list = []
-
-for words in word_list:
-    final_word_list.append(words.strip())
+for words in readFile:
+    final_word_list.append(words.casefold().strip())
 
     #Breaking final_word_list into lists for the different difficulties
-
 easy_words = []
 med_words = []
 hard_words = []
-
 for words in final_word_list:
     if len(words) >= 8:
         hard_words.append(words)
@@ -30,32 +21,23 @@ for words in final_word_list:
     elif len(words) <= 6:
         easy_words.append(words)
   
-    #Now I want to work on getting the function to take user input on difficulty and randomly generate word appropriate list
-
-
 def set_user_word():
     """User inputs desired difficulty and this returns the appropriate mystery word"""
     user_difficulty = input("Please choose your difficulty (easy, medium, or hard). ")
-    if user_difficulty.casefold() == "easy":
-        mystery_word = random.choice(easy_words)
-        return mystery_word
-    elif user_difficulty.casefold() == "medium":
-        mystery_word = random.choice(med_words)
-        return mystery_word
-    elif user_difficulty.casefold() == "hard":
-        mystery_word = random.choice(hard_words)
-        return mystery_word
+    if user_difficulty.casefold().strip() == "easy":
+        return random.choice(easy_words)
+    elif user_difficulty.casefold().strip() == "medium":
+        return random.choice(med_words)
+    elif user_difficulty.casefold().strip() == "hard":
+        return random.choice(hard_words)
     else:
         print("Plese try again, selecting only from (easy, medium, hard). ")
         return set_user_word()
 
 def guess_check():
     """Checks user input value to ensure it's a single character and a letter, reloops until appropriate value provided."""
-    guess = input("Please select a letter. ")
-    if not guess.isalpha():
-        print("Enter only letters.")
-        return guess_check()
-    if len(guess) != 1:
+    guess = input("Please select a letter. ").casefold()
+    if not guess.isalpha() or len(guess.strip()) != 1:
         print("Enter only a single letter.")
         return guess_check()
     else:
@@ -64,9 +46,9 @@ def guess_check():
 def play_game_again():
     """Asks user if they'd like to play again, tried some error handling with else statement"""
     play_again = input("Would you like to play again (y/n): ")
-    if play_again.casefold() == "y":
+    if play_again.casefold().strip() == "y":
         game_time()
-    elif play_again.casefold() == "n":
+    elif play_again.casefold().strip() == "n":
         print("Thanks for playing!")
     else:
         print("Please select y or n as your answer. ")
@@ -84,10 +66,6 @@ def game_time():
     # print(mystery_word) #testing
 
     while attempts > 0:
-
-        """uh-oh! this keeps running even if the player guesses the word (makes 
-        sense since it's only accounting for attempts need to incorporate check 
-        for letter if letter in guessed if in mystery_word?)"""
 
         display = [letter if letter in guessed else "_" for letter in mystery_word]
 
@@ -110,14 +88,13 @@ def game_time():
             attempts -= 1
             guessed.append(guess)
 
-    if attempts > 0: 
+    if attempts > 0: # redundant could make a function
         print("You guessed", mystery_word)
     else:
         print("You didn't get", mystery_word)
 
     play_game_again()
 
-
-
-game_time()
+if __name__ == "__main__":
+    game_time()
 
