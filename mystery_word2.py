@@ -75,7 +75,7 @@ def play_game_again():
 def game_time():
     """GAME TIME, this function takes our mystery_word and compiles the guesses 
     and cross checks to see if correct or not, displays progress and keeps counts 
-    of attempts. Should try and break up a bit."""
+    of attempts."""
 
     guessed = []
     attempts = 8
@@ -117,7 +117,7 @@ def game_time():
 
     play_game_again()
 
+
+
 game_time()
-
-
 
