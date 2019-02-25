@@ -61,7 +61,7 @@ def guess_check():
     else:
         return guess
 
-def play_again():
+def play_game_again():
     """Asks user if they'd like to play again, tried some error handling with else statement"""
     play_again = input("Would you like to play again (y/n): ")
     if play_again.casefold() == "y":
@@ -70,7 +70,7 @@ def play_again():
         print("Thanks for playing!")
     else:
         print("Please select y or n as your answer. ")
-        play_again()
+        play_game_again()
 
 def game_time():
     """GAME TIME, this function takes our mystery_word and compiles the guesses 
@@ -81,7 +81,7 @@ def game_time():
     attempts = 8
     mystery_word = set_user_word()
     
-    print(mystery_word)
+    # print(mystery_word) #testing
 
     while attempts > 0:
 
@@ -115,7 +115,7 @@ def game_time():
     else:
         print("You didn't get", mystery_word)
 
-    play_again()
+    play_game_again()
 
 game_time()
 
